@@ -1,16 +1,16 @@
 {% load socialaccount %}
 <html>
   <head>
-    <title>Google Registration</title>
+    <title>arEd</title>
   </head>
   <body>
   
   {% if user.is_authenticated %}
-  <h1>My Google Login Project</h1>
+  <h1>Login in</h1>
   <p>Welcome, {{ user.username }} !</p>
  
   {% else %}
-  <h1>My Google Login Project</h1>
+  <h1>Login in</h1>
   <a href="{% provider_login_url 'google' %}">Login with Google</a>
   {% endif %}
 
