@@ -1,12 +1,33 @@
-<h1>Blog</h1>
+{% load socialaccount %}
+<html>
+  <head>
+    <title>arEd</title>
+  </head>
+  <body>
+  <h1>BLOGS</h1>
 
-<ul>
-{% for post in object_list %}
-    <li>
-        <a href="{% url 'article-details' post.pk %}">{{ post.title }} 
-        </a>- {{ post.author.first_name }}{{ post.author.last_name }}
-        <br/>
-    {{ post.blog_post }}
-    </li>
-{% endfor %}
-</ul>
+  {% if user.is_authenticated %}
+  <p>Welcome, {{ user.username }} !</p>
+  <ul>
+    {% for blog in object_list %}
+        <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}<br/>
+        {{ blog.short_description }}</li>
+    
+    {% endfor %}
+    </ul>
+
+  {% else %}
+  <ul>
+    {% for blog in object_list %}
+        <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}<br/>
+        {{ blog.short_description }}</li>
+    
+    {% endfor %}
+    </ul>
+
+  <h3>You can Login here to view the blogs</h3>
+  <a href="{% provider_login_url 'google' %}">Login with Google</a>
+  {% endif %}
+ 
+  </body>
+</html>
