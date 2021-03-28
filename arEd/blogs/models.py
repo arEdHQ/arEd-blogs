@@ -10,4 +10,4 @@ class Blog(models.Model):
     blog_post = RichTextField()
     
     def __str__(self):
-        return self.title + '  ||  ' + str(self.author)
+        return self.title
