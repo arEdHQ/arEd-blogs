@@ -1,9 +1,12 @@
 <h1>{{ blog.title }}</h1>
+<img src="blog.title_image.url" style="max-height:300px"/>
+<br/>
 <small>By: {{ blog.author.first_name }} {{ blog.author.last_name }}</small>
 <br/>
 <hr>
 {{ blog.blog_content|safe }}
-
+<br/>
+<small>Date Published: {{ blog.published_date }}</small>
 <br/>
 {% if user.is_authenticated %}
 <a href="{% url 'update' blog.pk %}"><button>Edit</button></a>

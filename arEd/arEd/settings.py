@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blogs',
     'ckeditor',
+    'ckeditor_uploader',
     'django.contrib.sites',
 
 
@@ -78,32 +81,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'arEd.wsgi.application'
 
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
+
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
         'height': 300,
         'width': 300,
     },
-}
-
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            ['Font', 'Styles', 'Format'],
-            ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
-            ['Undo', 'Redo', '-', 'Scayt'],
-            ['Bold', 'Italic', 'Underline', 'Strike'],
-            ['TextColor', 'FontSize'],
-            ['NumberedList', 'BulletedList'],
-            ['Outdent', 'Indent', '-', 'JustifyLeft',
-                'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink', 'Anchor'],
-            ['Table', 'HorizontalRule', 'SpecialChar'],
-            ['Maximise'],
-            ['RemoveFormat', 'Source'],
-        ]
-    }
 }
 
 
@@ -142,7 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -155,6 +143,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 AUTHENTICATION_BACKENDS = (
