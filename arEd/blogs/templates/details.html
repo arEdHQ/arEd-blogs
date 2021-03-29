@@ -2,7 +2,7 @@
 <small>By: {{ blog.author.first_name }} {{ blog.author.last_name }}</small>
 <br/>
 <hr>
-{{ blog.blog_content }}
+{{ blog.blog_content|safe }}
 
 <br/>
 <a href="{% url 'home' %}">Back</a>
