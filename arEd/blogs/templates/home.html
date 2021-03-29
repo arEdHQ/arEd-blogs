@@ -8,6 +8,7 @@
 
   {% if user.is_authenticated %}
   <p>Welcome, {{ user.username }} !</p>
+  <a href="{% url 'add_blog' %}">Click to add a new blog</a>
   <ul>
     {% for blog in object_list %}
         <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}<br/>

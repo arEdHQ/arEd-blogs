@@ -5,4 +5,6 @@
 {{ blog.blog_content }}
 
 <br/>
-<a href="{% url 'home' %}">Back</a>
+<a href="{% url 'update' blog.pk %}"><button>Edit</button></a>
+<br/>
+<a href="{% url 'home' %}"><button>Home</button></a>
