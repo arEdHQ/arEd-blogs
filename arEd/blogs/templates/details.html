@@ -5,6 +5,11 @@
 {{ blog.blog_content|safe }}
 
 <br/>
+{% if user.is_authenticated %}
 <a href="{% url 'update' blog.pk %}"><button>Edit</button></a>
 <br/>
 <a href="{% url 'home' %}"><button>Home</button></a>
+{% else %}
+<br/>
+<a href="{% url 'home' %}"><button>Home</button></a>
+{% endif %}
