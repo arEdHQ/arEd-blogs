@@ -19,7 +19,7 @@ class Blog(models.Model):
     )
     short_description = models.TextField()
     blog_content = RichTextUploadingField()
-    #likes = models.ManyToManyField(User, related_name='blogpost_like')
+    likes = models.ManyToManyField(User, related_name='blog_like')
     published_date = models.DateTimeField(auto_now_add=True)
     blog_views = models.IntegerField(default=0)
 

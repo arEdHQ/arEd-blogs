@@ -11,7 +11,9 @@
   <a href="{% url 'add_blog' %}">Click to add a new blog</a>
   <ul>
     {% for blog in object_list %}
-        <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}<br/>
+        <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}-
+          {{blog.published_date}}
+          <br/>
         {{ blog.short_description }}</li>
     
     {% endfor %}

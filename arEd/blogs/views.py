@@ -37,5 +37,7 @@ class DeleteBlogView(DeleteView):
     template_name = 'delete_post.html'
     success_url = reverse_lazy('home')
 
-# def BlogPostLike(request, pk):
-#     post = get_object_or_404(Blog, id=)
+def LikeBlogView(request, pk):
+    blog = get_object_or_404(Blog, id=request.POST.get(blog_id))
+    blog.likes.add(request.user)
+    return HttpResponseRedirect(reverse('blog-detail', args=[str(blog.pk)]))
