@@ -8,12 +8,7 @@
 <hr>
 {{ blog.blog_content|safe }}
 <br/>
-<form action="{% url 'blog_like' blog.pk %}"
-method="POST">
-    {% csrf_token %}
-    <button type="submit", name="blog_id",
-    value="{{ blog.id }}">Like</button>
-</form>
+
 {% if user.is_authenticated %}
 <a href="{% url 'update' blog.pk %}"><button>Edit</button></a>
 <a href="{% url 'delete' blog.pk %}"><button style="background-color:red;">Delete</button></a>
