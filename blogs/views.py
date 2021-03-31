@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+# from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Blog
-from django.http import HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
+# from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 
 
 class HomeView(ListView):
@@ -31,6 +32,7 @@ class UpdateBlogView(UpdateView):
     model = Blog
     template_name = 'update_blog.html'
     fields = ['title', 'short_description', 'blog_content']
+
 
 class DeleteBlogView(DeleteView):
     model = Blog

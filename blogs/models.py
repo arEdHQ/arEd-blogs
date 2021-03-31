@@ -15,7 +15,8 @@ class Blog(models.Model):
 #        blank=True,
 #        null=True,
 #        default='blog/default.png',
-#        help_text = 'This image will be displayed as the title image of the blog.'
+#        help_text = 'This image will be displayed as the
+#        title image of the blog.'
 #    )
     short_description = models.TextField()
     blog_content = RichTextUploadingField()
