@@ -95,6 +95,25 @@ CKEDITOR_CONFIGS = {
     },
 }
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Font', 'Styles', 'Format'],
+            ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
+            ['Undo', 'Redo', '-', 'Scayt'],
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['TextColor', 'FontSize'],
+            ['NumberedList', 'BulletedList'],
+            ['Outdent', 'Indent', '-', 'JustifyLeft',
+                'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+            ['Maximise'],
+            ['RemoveFormat', 'Source'],
+        ]
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
