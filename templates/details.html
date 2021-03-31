@@ -10,10 +10,14 @@
 <br/>
 
 {% if user.is_authenticated %}
+{% if user.id == blog.author.id %}
 <a href="{% url 'update' blog.pk %}"><button>Edit</button></a>
 <a href="{% url 'delete' blog.pk %}"><button style="background-color:red;">Delete</button></a>
 <br/><br/>
 <a href="{% url 'home' %}"><button>Home</button></a>
+{% else %}
+<a href="{% url 'home' %}"><button>Home</button></a>
+{% endif %}
 {% else %}
 <br/>
 <a href="{% url 'home' %}"><button>Home</button></a>
