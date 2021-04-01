@@ -1,0 +1,36 @@
+{% load socialaccount %}
+<html>
+  <head>
+    <title>arEd</title>
+  </head>
+  <body>
+  <h1>BLOGS</h1>
+
+  {% if user.is_authenticated %}
+  <p>Welcome, {{ user.username }} !</p>
+  <a href="{% url 'add_blog' %}">Click to add a new blog</a>
+  <ul>
+    {% for blog in object_list %}
+        <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}-
+          {{blog.published_date}}
+          <br/>
+        {{ blog.short_description }}</li>
+    
+    {% endfor %}
+    </ul>
+
+  {% else %}
+  <ul>
+    {% for blog in object_list %}
+        <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}<br/>
+        {{ blog.short_description }}</li>
+    
+    {% endfor %}
+    </ul>
+
+  <h3>You can Login here to add your own blogs</h3>
+  <a href="{% provider_login_url 'google' %}"><button>Login with Google</button></a>
+  {% endif %}
+ 
+  </body>
+</html>
