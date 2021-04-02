@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'django.contrib.sites',
     'templates',
+    'crispy_forms',
 
 
     'allauth',
@@ -188,3 +189,4 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SITE_ID = 3
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
