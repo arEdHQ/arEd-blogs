@@ -3,7 +3,11 @@ from django.views.generic import ListView, DetailView
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Blog
 # from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.contrib.auth import login, logout
+from django.contrib import messages
 
 
 class HomeView(ListView):
@@ -38,3 +42,8 @@ class DeleteBlogView(DeleteView):
     model = Blog
     template_name = 'delete_post.html'
     success_url = reverse_lazy('home')
+
+def logout_request(request):
+    logout(request)
+    messages.info(request, "You have successfully logged out.")
+    return redirect("home")    
