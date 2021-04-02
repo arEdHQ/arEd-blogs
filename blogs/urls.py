@@ -8,5 +8,5 @@ urlpatterns = [
     path('add_blog/', AddBlogView.as_view(), name='add_blog'),
     path('blog/edit/<int:pk>', UpdateBlogView.as_view(), name='update'),
     path('blog/<int:pk>/remove', DeleteBlogView.as_view(), name='delete'),
-    path("logout", views.logout_request, name="logout"),
+    path("logout/", views.logout_request, name="logout"),
 ]
