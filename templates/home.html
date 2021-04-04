@@ -8,14 +8,18 @@
 
 <body>
   <h1>BLOGS</h1>
-
+  <!-- checks if user is authenticated -->
   {% if user.is_authenticated %}
+
+  <!-- to check if user is part of author group -->
   {% if request.user|has_group:"author" %}
   <p>Welcome, {{ user.username }} !</p>
-  <a href="{% url 'add_blog' %}">Click to add a new blog</a>
+  <a href="{% url 'add_blog' %}">Click</a><a> to add a new blog</a>
+
   {% else %}
   <p>Welcome, {{ user.username }} !</p>
   {% endif %}
+
   <ul>
     {% for blog in object_list %}
     <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}-
@@ -36,7 +40,7 @@
     {% endfor %}
   </ul>
 
-  <h3>You can Login here to add your own blogs</h3>
+  <h3>You can Login here </h3>
   <a href="{% provider_login_url 'google' %}"><button>Login with Google</button></a>
   {% endif %}
 

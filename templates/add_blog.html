@@ -5,6 +5,7 @@
     {{ form.as_p }}
     <button>Post</button>
 </form>
+<!-- java script for giving author a definite value that is its user id -->
 <script>
     var name = "{{ user.id }}";
     document.getElementById("user").value = name;
