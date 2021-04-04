@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'crispy_forms',
 
 
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -77,6 +78,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+                'auth_extras': 'templates.auth_extras'
+            }
         },
     },
 ]
@@ -187,6 +191,6 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-SITE_ID = 4
+SITE_ID = 5
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

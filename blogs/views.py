@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, logout
 from django.contrib import messages
+from .forms import BlogForm
 
 
 class HomeView(ListView):
@@ -28,8 +29,10 @@ class BlogView(DetailView):
 
 class AddBlogView(CreateView):
     model = Blog
+    form_class = BlogForm
     template_name = 'add_blog.html'
-    fields = '__all__'
+    # fields = ['title', 'author', 'title_image',
+    #           'short_description', 'blog_content']
 
 
 class UpdateBlogView(UpdateView):
@@ -43,7 +46,8 @@ class DeleteBlogView(DeleteView):
     template_name = 'delete_post.html'
     success_url = reverse_lazy('home')
 
+
 def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
-    return redirect("home")    
+    return redirect("home")

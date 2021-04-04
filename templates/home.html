@@ -1,4 +1,5 @@
 {% load socialaccount %}
+{% load auth_extras %}
 <html>
 
 <head>
@@ -9,8 +10,12 @@
   <h1>BLOGS</h1>
 
   {% if user.is_authenticated %}
+  {% if request.user|has_group:"author" %}
   <p>Welcome, {{ user.username }} !</p>
-  <!-- <a href="{% url 'add_blog' %}">Click to add a new blog</a> -->
+  <a href="{% url 'add_blog' %}">Click to add a new blog</a>
+  {% else %}
+  <p>Welcome, {{ user.username }} !</p>
+  {% endif %}
   <ul>
     {% for blog in object_list %}
     <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}-

@@ -1,7 +1,11 @@
-<!-- <h1>Add your blog here !</h1>
-<form method = "POST" enctype = "multipart/form-data">
+<h1>Add your blog here !</h1>
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}
     <button>Post</button>
-</form> -->
+</form>
+<script>
+    var name = "{{ user.id }}";
+    document.getElementById("user").value = name;
+</script>
