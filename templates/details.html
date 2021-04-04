@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
 <h1>{{ blog.title }}</h1>
 <img src="{{blog.title_image.url}}" style="max-height:300px" />
 <br />
@@ -14,11 +18,13 @@
 <a href="{% url 'update' blog.pk %}"><button>Edit</button></a>
 <a href="{% url 'delete' blog.pk %}"><button style="background-color:red;">Delete</button></a>
 <br /><br />
-<a href="{% url 'home' %}"><button>Home</button></a>
+<a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
 {% else %}
-<a href="{% url 'home' %}"><button>Home</button></a>
+<a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
 {% endif %}
 {% else %}
 <br />
-<a href="{% url 'home' %}"><button>Home</button></a>
+<a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
 {% endif %}
+
+{% endblock %}

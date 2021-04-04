@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
 {% load socialaccount %}
 {% load auth_extras %}
 <html>
@@ -8,6 +12,7 @@
 
 <body>
   <h1>BLOGS</h1>
+  <hr>
   <!-- checks if user is authenticated -->
   {% if user.is_authenticated %}
 
@@ -29,7 +34,7 @@
 
     {% endfor %}
   </ul>
-  <a href="/logout"><button>Logout</button></a>
+  <a href="/logout"><button class="btn btn-outline-warning">Logout</button></a>
 
   {% else %}
   <ul>
@@ -41,9 +46,10 @@
   </ul>
 
   <h3>You can Login here </h3>
-  <a href="{% provider_login_url 'google' %}"><button>Login with Google</button></a>
+  <a href="{% provider_login_url 'google' %}"><button class="btn btn-outline-success">Login with Google</button></a>
   {% endif %}
 
 </body>
 
 </html>
+{% endblock %}
