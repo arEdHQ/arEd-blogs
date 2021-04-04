@@ -26,23 +26,47 @@
   {% endif %}
 
   <ul>
-    {% for blog in object_list %}
-    <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}-
+    <br />
+    <div class="row">
+      {% for blog in object_list %}
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ blog.title }} - {{ blog.author }}</h5>
+            <p class="card-text">{{ blog.short_description }}</p>
+            <a href="{% url 'blog-detail' blog.pk %}" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+      <!-- <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}-
       {{blog.published_date}}
       <br />
-      {{ blog.short_description }}</li>
+      {{ blog.short_description }}</li> -->
 
-    {% endfor %}
+      {% endfor %}
   </ul>
   <a href="/logout"><button class="btn btn-outline-warning">Logout</button></a>
 
   {% else %}
   <ul>
-    {% for blog in object_list %}
-    <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}<br />
-      {{ blog.short_description }}</li>
 
-    {% endfor %}
+    <div class="row">
+      {% for blog in object_list %}
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ blog.title }} - {{ blog.author }}</h5>
+            <p class="card-text">{{ blog.short_description }}</p>
+            <a href="{% url 'blog-detail' blog.pk %}" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+      <!-- <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}-
+      {{blog.published_date}}
+      <br />
+      {{ blog.short_description }}</li> -->
+
+      {% endfor %}
   </ul>
 
   <h3>You can Login here </h3>
