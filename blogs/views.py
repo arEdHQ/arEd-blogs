@@ -17,6 +17,7 @@ class HomeView(ListView):
 class BlogView(DetailView):
     model = Blog
     template_name = 'details.html'
+    slug_field='slug'
 
     def get_object(self):
         obj = super().get_object()
