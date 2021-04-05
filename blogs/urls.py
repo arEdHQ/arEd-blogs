@@ -4,10 +4,10 @@ from .views import BlogView, HomeView, AddBlogView, UpdateBlogView, DeleteBlogVi
 
 urlpatterns = [
     path('', HomeView.as_view(), name="home"),
-    path('blog/<int:pk>', BlogView.as_view(), name='blog-detail'),
+    path('blog/<slug:slug>', BlogView.as_view(), name='blog-detail'),
     path('add_blog/', AddBlogView.as_view(), name='add_blog'),
-    path('blog/edit/<int:pk>', UpdateBlogView.as_view(), name='update'),
-    path('blog/<int:pk>/remove', DeleteBlogView.as_view(), name='delete'),
+    path('blog/edit/<slug>', UpdateBlogView.as_view(), name='update'),
+    path('blog/<slug>/remove', DeleteBlogView.as_view(), name='delete'),
     path("logout/", views.logout_request, name="logout"),
-    path('blogpost-like/<int:pk>', views.BlogPostLike, name="blogpost_like"),
+    path('blogpost-like/<slug>', views.BlogPostLike, name="blogpost_like"),
 ]
