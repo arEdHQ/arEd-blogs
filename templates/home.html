@@ -34,7 +34,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ blog.title }} - {{ blog.author }}</h5>
             <p class="card-text">{{ blog.short_description }}</p>
-            <a href="{% url 'blog-detail' blog.pk %}" class="btn btn-primary">Read More</a>
+            <a href="{% url 'blog-detail' blog.slug %}" class="btn btn-primary">Read More</a>
           </div>
         </div>
       </div>
@@ -57,11 +57,11 @@
           <div class="card-body">
             <h5 class="card-title">{{ blog.title }} - {{ blog.author }}</h5>
             <p class="card-text">{{ blog.short_description }}</p>
-            <a href="{% url 'blog-detail' blog.pk %}" class="btn btn-primary">Read More</a>
+            <a href="{% url 'blog-detail' blog.slug %}" class="btn btn-primary">Read More</a>
           </div>
         </div>
       </div>
-      <!-- <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}-
+      <!-- <li><a href="{% url 'blog-detail' blog.slug %}">{{ blog.title }}</a>- {{ blog.author }}-
       {{blog.published_date}}
       <br />
       {{ blog.short_description }}</li> -->
