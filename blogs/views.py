@@ -1,10 +1,8 @@
-# from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Blog
-# from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, logout
 from django.contrib import messages
@@ -26,13 +24,24 @@ class BlogView(DetailView):
         obj.save()
         return obj
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+
+        likes_connected = get_object_or_404(Blog, id=self.kwargs['pk'])
+        liked = False
+        if likes_connected.blog_likes.filter(id=self.request.user.id).exists():
+            liked = True
+        data['number_of_likes'] = likes_connected.number_of_likes()
+        data['post_is_liked'] = liked
+        return data
+
 
 class AddBlogView(CreateView):
     model = Blog
     form_class = BlogForm
     template_name = 'add_blog.html'
-    # fields = ['title', 'author', 'title_image',
-    #           'short_description', 'blog_content']
+    fields = ['title', 'author', 'title_image',
+              'short_description', 'blog_content']
 
 
 class UpdateBlogView(UpdateView):
@@ -51,3 +60,13 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("home")
+
+
+def BlogPostLike(request, pk):
+    post = get_object_or_404(Blog, id=request.POST.get('blogpost_id'))
+    if post.blog_likes.filter(id=request.user.id).exists():
+        post.blog_likes.remove(request.user)
+    else:
+        post.blog_likes.add(request.user)
+
+    return HttpResponseRedirect(reverse('blog-detail', args=[str(pk)]))

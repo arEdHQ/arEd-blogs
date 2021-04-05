@@ -9,4 +9,5 @@ urlpatterns = [
     path('blog/edit/<int:pk>', UpdateBlogView.as_view(), name='update'),
     path('blog/<int:pk>/remove', DeleteBlogView.as_view(), name='delete'),
     path("logout/", views.logout_request, name="logout"),
+    path('blogpost-like/<int:pk>', views.BlogPostLike, name="blogpost_like"),
 ]

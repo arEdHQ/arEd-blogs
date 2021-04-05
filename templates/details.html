@@ -20,12 +20,28 @@
 <a href="{% url 'delete' blog.pk %}"><button style="background-color:red;">Delete</button></a>
 <br /><br />
 <a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
-{% else %}
-<a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
-{% endif %}
+
+
 {% else %}
 <br />
-<a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
+
+<form action="{% url 'blogpost_like' object.id %}" method="POST">
+    {% csrf_token %}
+
+    {% if post_is_liked %}
+    <button type="submit" name="blogpost_id" value="{{object.id}}" class="btn btn-info">Unlike</button>
+    {% else %}
+    <button type="submit" name="blogpost_id" value="{{object.id}}" class="btn btn-info">Like</button>
+    {% endif %}
+</form>
 {% endif %}
+{% else %}
+<a class="btn btn-outline-info" href="{% url 'home' %}">Log in to like this
+    article!</a><br>
+{% endif %}
+<strong class="text-secondary"> {{ number_of_likes }} Like{{ number_of_likes|pluralize }}</strong>
+<br /><br />
+<a href="{% url 'home' %}"><button class="btn btn-primary">Home</button></a>
+
 
 {% endblock %}

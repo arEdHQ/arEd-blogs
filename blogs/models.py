@@ -29,3 +29,6 @@ class Blog(models.Model):
 # this redirects post button to blog-detail page
     def get_absolute_url(self):
         return reverse('blog-detail', args=(str(self.id)))
+
+    def number_of_likes(self):
+        return self.blog_likes.count()
