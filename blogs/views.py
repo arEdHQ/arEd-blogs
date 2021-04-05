@@ -28,11 +28,7 @@ class BlogView(DetailView):
         data = super().get_context_data(**kwargs)
 
         likes_connected = get_object_or_404(Blog, id=self.kwargs['pk'])
-        liked = False
-        if likes_connected.blog_likes.filter(id=self.request.user.id).exists():
-            liked = True
         data['number_of_likes'] = likes_connected.number_of_likes()
-        data['post_is_liked'] = liked
         return data
 
 
@@ -40,8 +36,8 @@ class AddBlogView(CreateView):
     model = Blog
     form_class = BlogForm
     template_name = 'add_blog.html'
-    fields = ['title', 'author', 'title_image',
-              'short_description', 'blog_content']
+    # fields = ['title', 'author', 'title_image',
+    #           'short_description', 'blog_content']
 
 
 class UpdateBlogView(UpdateView):
@@ -64,9 +60,6 @@ def logout_request(request):
 
 def BlogPostLike(request, pk):
     post = get_object_or_404(Blog, id=request.POST.get('blogpost_id'))
-    if post.blog_likes.filter(id=request.user.id).exists():
-        post.blog_likes.remove(request.user)
-    else:
-        post.blog_likes.add(request.user)
+    post.blog_likes.add(request.user)
 
     return HttpResponseRedirect(reverse('blog-detail', args=[str(pk)]))
