@@ -17,8 +17,8 @@
 {% if user.is_authenticated %}
 
 {% if user.id == blog.author.id %}
-<a href="{% url 'update' blog.pk %}"><button class="btn btn-secondary">Edit</button></a>
-<a href="{% url 'delete' blog.pk %}"><button class="btn btn-danger">Delete</button></a>
+<a href="{% url 'update' blog.slug %}"><button class="btn btn-secondary">Edit</button></a>
+<a href="{% url 'delete' blog.slug %}"><button class="btn btn-danger">Delete</button></a>
 <br /><br />
 
 
@@ -26,9 +26,9 @@
 {% else %}
 <br />
 
-<form action="{% url 'blogpost_like' blog.id %}" method="POST">
+<form action="{% url 'blogpost_like' blog.slug %}" method="POST">
     {% csrf_token %}
-    <button type="submit" name="blogpost_id" value="{{blog.id}}" class="btn btn-info"><svg
+    <button type="submit" name="blogpost_id" value="{{blog.slug}}" class="btn btn-info"><svg
             xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up"
             viewBox="0 0 16 16">
             <path
