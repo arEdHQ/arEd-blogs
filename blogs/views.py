@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, RedirectView
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Blog
 from django.urls import reverse_lazy, reverse
@@ -25,12 +25,16 @@ class BlogView(DetailView):
         obj.save()
         return obj
 
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
 
-        likes_connected = get_object_or_404(Blog, id=self.kwargs['pk'])
-        data['number_of_likes'] = likes_connected.number_of_likes()
-        return data
+class BlogLikeRedirect(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        slug = self.kwargs.get("slug")
+        obj = get_object_or_404(Blog, slug=slug)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        if user.is_authenticated:
+            obj.blog_likes.add(user)
+        return url_
 
 
 class AddBlogView(CreateView):
@@ -58,9 +62,3 @@ def logout_request(request):
     messages.info(request, "You have successfully logged out.")
     return redirect("home")
 
-
-def BlogPostLike(request, pk):
-    post = get_object_or_404(Blog, id=request.POST.get('blogpost_id'))
-    post.blog_likes.add(request.user)
-
-    return HttpResponseRedirect(reverse('blog-detail', args=[str(pk)]))

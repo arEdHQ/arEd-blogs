@@ -13,9 +13,6 @@ class Blog(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title_image = models.ImageField(
         upload_to='blog/',
-        blank=True,
-        null=True,
-        default='blog/default.png',
         help_text='This image will be displayed as the title image of the blog.'
     )
     short_description = models.TextField()
@@ -39,7 +36,7 @@ class Blog(models.Model):
 
 # this redirects post button to blog-detail page
     def get_absolute_url(self):
-        return reverse('home')
+        return reverse('blog-detail', kwargs={'slug':self.slug})
 
     def number_of_likes(self):
         return self.blog_likes.count()
