@@ -26,14 +26,21 @@ class BlogView(DetailView):
         return obj
 
 
-class BlogLikeRedirect(RedirectView):
+class BlogLikeToggle(RedirectView):
+    model = Blog
+    template_name = 'details.html'
+
     def get_redirect_url(self, *args, **kwargs):
         slug = self.kwargs.get("slug")
         obj = get_object_or_404(Blog, slug=slug)
         url_ = obj.get_absolute_url()
+        number_of_likes = obj.number_of_likes()
         user = self.request.user
         if user.is_authenticated:
-            obj.blog_likes.add(user)
+            if user in obj.blog_likes.all():
+                obj.blog_likes.remove(user)
+            else:
+                obj.blog_likes.add(user)
         return url_
 
 
