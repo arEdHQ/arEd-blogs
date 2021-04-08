@@ -79,7 +79,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'libraries':{
-                'auth_extras': 'templates.auth_extras'
+                'auth_extras': 'blogs.auth_extras'
             }
         },
     },
