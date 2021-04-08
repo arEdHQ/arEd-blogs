@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+
 
 from pathlib import Path
 
@@ -191,6 +193,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-SITE_ID = 5
+load_dotenv()
+SITE_ID = os.getenv('SITE_ID')
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
