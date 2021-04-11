@@ -1,2 +1,2 @@
 # arEd-blogs
-![Python Package CI](https://github.com/devlup-labs/varchas/workflows/Python%20package/badge.svg)
+![Python Package CI](/workflows/Python%20package/badge.svg)
