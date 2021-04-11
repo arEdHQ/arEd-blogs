@@ -1,36 +1,79 @@
-{% load socialaccount %}
-<html>
-  <head>
-    <title>arEd</title>
-  </head>
-  <body>
-  <h1>BLOGS</h1>
+{% extends 'base.html' %}
+{% block content %}
 
+
+{% load socialaccount %}
+{% load auth_extras %}
+<html>
+
+<head>
+  <title>arEd</title>
+</head>
+
+<body>
+  <h1>BLOGS</h1>
+  <hr>
+  <!-- checks if user is authenticated -->
   {% if user.is_authenticated %}
+
+  <!-- to check if user is part of author group -->
+  {% if request.user|has_group:"author" %}
   <p>Welcome, {{ user.username }} !</p>
-  <a href="{% url 'add_blog' %}">Click to add a new blog</a>
+  <a href="{% url 'add_blog' %}">Click</a><a> to add a new blog</a>
+
+  {% else %}
+  <p>Welcome, {{ user.username }} !</p>
+  {% endif %}
+
   <ul>
-    {% for blog in object_list %}
-        <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}-
-          {{blog.published_date}}
-          <br/>
-        {{ blog.short_description }}</li>
-    
-    {% endfor %}
-    </ul>
+    <br />
+    <div class="row">
+      {% for blog in object_list %}
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ blog.title }} - {{ blog.author }}</h5>
+            <p class="card-text">{{ blog.short_description }}</p>
+            <a href="{% url 'blog-detail' blog.slug %}" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+      <!-- <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}-
+      {{blog.published_date}}
+      <br />
+      {{ blog.short_description }}</li> -->
+
+      {% endfor %}
+  </ul>
+  <a href="/logout"><button class="btn btn-outline-warning">Logout</button></a>
 
   {% else %}
   <ul>
-    {% for blog in object_list %}
-        <li><a href="{% url 'blog-detail' blog.pk %}">{{ blog.title }}</a>- {{ blog.author }}<br/>
-        {{ blog.short_description }}</li>
-    
-    {% endfor %}
-    </ul>
 
-  <h3>You can Login here to add your own blogs</h3>
-  <a href="{% provider_login_url 'google' %}"><button>Login with Google</button></a>
+    <div class="row">
+      {% for blog in object_list %}
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ blog.title }} - {{ blog.author }}</h5>
+            <p class="card-text">{{ blog.short_description }}</p>
+            <a href="{% url 'blog-detail' blog.slug %}" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+      <!-- <li><a href="{% url 'blog-detail' blog.slug %}">{{ blog.title }}</a>- {{ blog.author }}-
+      {{blog.published_date}}
+      <br />
+      {{ blog.short_description }}</li> -->
+
+      {% endfor %}
+  </ul>
+
+  <h3>You can Login here </h3>
+  <a href="{% provider_login_url 'google' %}"><button class="btn btn-outline-success">Login with Google</button></a>
   {% endif %}
- 
-  </body>
+
+</body>
+
 </html>
+{% endblock %}

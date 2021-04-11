@@ -1,9 +1,12 @@
-# from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, RedirectView
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Blog
-# from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.contrib.auth import login, logout
+from django.contrib import messages
+from .forms import BlogForm
 
 
 class HomeView(ListView):
@@ -14,6 +17,7 @@ class HomeView(ListView):
 class BlogView(DetailView):
     model = Blog
     template_name = 'details.html'
+    slug_field='slug'
 
     def get_object(self):
         obj = super().get_object()
@@ -22,10 +26,30 @@ class BlogView(DetailView):
         return obj
 
 
+class BlogLikeToggle(RedirectView):
+    model = Blog
+    template_name = 'details.html'
+
+    def get_redirect_url(self, *args, **kwargs):
+        slug = self.kwargs.get("slug")
+        obj = get_object_or_404(Blog, slug=slug)
+        url_ = obj.get_absolute_url()
+        number_of_likes = obj.number_of_likes()
+        user = self.request.user
+        if user.is_authenticated:
+            if user in obj.blog_likes.all():
+                obj.blog_likes.remove(user)
+            else:
+                obj.blog_likes.add(user)
+        return url_
+
+
 class AddBlogView(CreateView):
     model = Blog
+    form_class = BlogForm
     template_name = 'add_blog.html'
-    fields = '__all__'
+    # fields = ['title', 'author', 'title_image',
+    #           'short_description', 'blog_content']
 
 
 class UpdateBlogView(UpdateView):
@@ -38,3 +62,10 @@ class DeleteBlogView(DeleteView):
     model = Blog
     template_name = 'delete_post.html'
     success_url = reverse_lazy('home')
+
+
+def logout_request(request):
+    logout(request)
+    messages.info(request, "You have successfully logged out.")
+    return redirect("home")
+
