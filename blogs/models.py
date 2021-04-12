@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.urls import reverse
 from django.utils.text import slugify
+from .utils import get_read_time
+import math
 
 
 # Create your models here.
@@ -13,7 +15,7 @@ class Blog(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title_image = models.ImageField(
         upload_to='blog/',
-        help_text='This image will be displayed as the title image of the blog.'
+        # help_text='This image will be displayed as the title image of the blog.'
     )
     short_description = models.TextField()
     blog_content = RichTextUploadingField()
@@ -21,6 +23,7 @@ class Blog(models.Model):
     slug = models.SlugField(unique=True, blank=True)
     blog_views = models.IntegerField(default=0)
     blog_likes = models.ManyToManyField(User, related_name='likes')
+    read_time = models.TimeField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -40,3 +43,9 @@ class Blog(models.Model):
 
     def number_of_likes(self):
         return self.blog_likes.count()
+
+    def blog_readtime(self):
+        html_string = self.blog_content
+        read_time_var = get_read_time(html_string)
+        self.read_time = read_time_var
+        return math.ceil(read_time_var)
