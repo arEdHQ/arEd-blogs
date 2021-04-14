@@ -195,6 +195,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 load_dotenv()
-SITE_ID = '6'
+SITE_ID = os.getenv('SITE_ID')
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
