@@ -8,6 +8,10 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from .forms import BlogForm
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+
 
 class HomeView(ListView):
     model = Blog
@@ -17,7 +21,7 @@ class HomeView(ListView):
 class BlogView(DetailView):
     model = Blog
     template_name = 'details.html'
-    slug_field='slug'
+    slug_field = 'slug'
 
     def get_object(self):
         obj = super().get_object()
@@ -34,14 +38,40 @@ class BlogLikeToggle(RedirectView):
         slug = self.kwargs.get("slug")
         obj = get_object_or_404(Blog, slug=slug)
         url_ = obj.get_absolute_url()
-        number_of_likes = obj.number_of_likes()
         user = self.request.user
         if user.is_authenticated:
             if user in obj.blog_likes.all():
-                obj.blog_likes.remove(user)
+                pass
             else:
                 obj.blog_likes.add(user)
         return url_
+
+
+class BlogLikeAPIToggle(APIView):
+    authentication_classes = (authentication.SessionAuthentication, )
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, slug=None, format=None):
+        #slug = self.kwargs.get("slug")
+        obj = get_object_or_404(Blog, slug=slug)
+        #url_ = obj.get_absolute_url()
+        user = self.request.user
+        updated = False
+        liked = False
+
+        if user.is_authenticated:
+            if user in obj.blog_likes.all():
+                liked = False
+                pass
+            else:
+                obj.blog_likes.add(user)
+                liked = True
+            updated = True
+        data = {
+            'updated': updated,
+            'liked': liked
+        }
+        return Response(data)
 
 
 class AddBlogView(CreateView):
@@ -68,4 +98,3 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("home")
-

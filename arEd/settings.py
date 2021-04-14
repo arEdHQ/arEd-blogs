@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -194,6 +195,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 load_dotenv()
-SITE_ID = os.getenv('SITE_ID')
+SITE_ID = '6'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
