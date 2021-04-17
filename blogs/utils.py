@@ -1,6 +1,4 @@
-#import datetime
 import re
-
 from django.utils.html import strip_tags
 
 
