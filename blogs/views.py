@@ -3,7 +3,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Blog
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
-#from django.http import HttpResponseRedirect
+# from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
 from django.contrib import messages
 from .forms import BlogForm
@@ -33,11 +33,11 @@ class BlogView(DetailView):
         context = super().get_context_data(**kwargs)
         slug = self.kwargs.get("slug")
         obj = get_object_or_404(Blog, slug=slug)
-        l = []
+        liked_user_list = []
         for i in obj.blog_likes.all():
-            l.append(i.id)
+            liked_user_list.append(i.id)
 
-        context['liked_user'] = l
+        context['liked_user'] = liked_user_list
         return context
 
 
