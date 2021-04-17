@@ -16,7 +16,8 @@ class Blog(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title_image = models.ImageField(
         upload_to='blog/',
-        help_text='This image will be displayed as the title image of the blog.'
+        # help_text='This image will be displayed as\
+        # the title image of the blog.'
     )
     short_description = models.TextField()
     blog_content = RichTextUploadingField()
@@ -33,8 +34,8 @@ class Blog(models.Model):
         if not self.slug:
             if Blog.objects.filter(title=(self.title)).exists():
                 count = Blog.objects.filter(title=(self.title)).count()
-                self.slug = "%s-%s" % (slugify(kwargs.pop('title',
-                                                          self.title)), count+1)
+                self.slug = "%s-%s" % (slugify(kwargs.pop('title', self.title)
+                                               ), count+1)
             else:
                 self.slug = slugify(kwargs.pop('title', self.title))
         return super(Blog, self).save(*args, **kwargs)
