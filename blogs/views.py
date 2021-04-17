@@ -1,10 +1,10 @@
 from django.views.generic import ListView, DetailView, RedirectView
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Blog
-from django.urls import reverse_lazy, reverse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
-from django.contrib.auth import login, logout
+from django.urls import reverse_lazy
+from django.shortcuts import redirect, get_object_or_404
+#from django.http import HttpResponseRedirect
+from django.contrib.auth import logout
 from django.contrib import messages
 from .forms import BlogForm
 
