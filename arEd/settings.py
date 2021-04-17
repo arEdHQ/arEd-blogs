@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'django.contrib.sites',
     'templates',
-    'crispy_forms',
 
 
 
