@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-# BlogLikeAPIToggle
 from .views import BlogView, HomeView, AddBlogView, UpdateBlogView, DeleteBlogView, BlogLikeToggle, BlogLikeAPIToggle
 
 urlpatterns = [

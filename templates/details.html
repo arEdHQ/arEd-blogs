@@ -2,24 +2,25 @@
 {% block content %}
 
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
             function updateText(btn, newCount) {
-                btn.text(newCount + ' Claps')
+                if (newCount == 1) {
+                    $('#btn').text(newCount + ' Clap')
+                } else {
+                    $('#btn').text(newCount + ' Claps')
+                }
             }
+
             $('.like-btn').click(function (e) {
-
-
-
-
-
-
                 e.preventDefault();
-                var this_ = $(this)
+                var this_ = $(this);
                 var likeUrl = this_.attr("data-href");
-                var likes = parseInt(this_.attr("data-likes"))
-                var add_like = likes + 1
+                var likes = parseInt(this_.attr("data-likes"));
+                var add_likes = likes + 1
+
+
                 $.ajax({
                     url: likeUrl,
                     method: "GET",
@@ -27,15 +28,14 @@
                     success: function (data) {
                         console.log(data)
 
+
                         if (data.Liked) {
-
-
                             updateText(this_, likes)
                         } else {
-
-
-                            updateText(this_, add_like)
+                            updateText(this_, add_likes)
                         }
+
+
                     },
                     error: function (error) {
                         console.log(error)
@@ -44,9 +44,6 @@
 
                 });
             });
-
-
-
         });
     </script>
 </head>
@@ -55,8 +52,8 @@
 <img src="{{blog.title_image.url}}" style="max-height:300px" />
 <br />
 <small>By: {{ blog.author.first_name }} {{ blog.author.last_name }} -
-    {{ blog.published_date }} - {{ blog.blog_readtime|pluralize }} min read - {{ blog.blog_views|pluralize }} views <i
-        class="fa fa-eye" aria-hidden="true"> </i>
+    {{ blog.published_date }} - {{ blog.blog_readtime }} min{{ blog.blog_readtime|pluralize }} read -
+    {{ blog.blog_views }} view{{ blog.blog_views|pluralize }} <i class="fa fa-eye" aria-hidden="true"> </i>
 
 </small>
 <br />
@@ -75,11 +72,15 @@
 
 {% else %}
 <br />
-
-
+{% if user.id not in liked_user %}
 <a class='like-btn' data-href="{% url 'blogpost_api_like' blog.slug %}" data-likes='{{ blog.number_of_likes }}'
-    href="{% url 'blogpost_like' blog.slug %}">{{ blog.number_of_likes }}
-    Clap{{ blog.number_of_likes|pluralize }}</a>
+    href="{% url 'blogpost_like' blog.slug %}"><button class="btn btn-secondary" id='btn'>{{ blog.number_of_likes }}
+        Clap{{ blog.number_of_likes|pluralize }}</button></a>
+{% endif %}
+{% if user.id in liked_user %}
+<button class="btn btn-secondary btn-lg" disabled id="btn">{{ blog.number_of_likes }}
+    Clap{{ blog.number_of_likes|pluralize }}</button></a>
+{% endif %}
 
 
 

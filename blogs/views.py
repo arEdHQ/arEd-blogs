@@ -29,6 +29,17 @@ class BlogView(DetailView):
         obj.save()
         return obj
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        slug = self.kwargs.get("slug")
+        obj = get_object_or_404(Blog, slug=slug)
+        l = []
+        for i in obj.blog_likes.all():
+            l.append(i.id)
+
+        context['liked_user'] = l
+        return context
+
 
 class BlogLikeToggle(RedirectView):
     model = Blog
@@ -52,9 +63,9 @@ class BlogLikeAPIToggle(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, slug=None, format=None):
-        #slug = self.kwargs.get("slug")
+
         obj = get_object_or_404(Blog, slug=slug)
-        #url_ = obj.get_absolute_url()
+
         user = self.request.user
         updated = False
         liked = False
