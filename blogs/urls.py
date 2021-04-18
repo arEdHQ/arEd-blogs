@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from .views import BlogView, HomeView, AddBlogView, UpdateBlogView, DeleteBlogView, BlogLikeToggle
+from .views import BlogView, HomeView, AddBlogView, UpdateBlogView
+from .views import DeleteBlogView, BlogLikeToggle, BlogLikeAPIToggle
 
 urlpatterns = [
     path('', HomeView.as_view(), name="home"),
@@ -9,5 +10,9 @@ urlpatterns = [
     path('blog/edit/<slug>', UpdateBlogView.as_view(), name='update'),
     path('blog/<slug>/remove', DeleteBlogView.as_view(), name='delete'),
     path("logout/", views.logout_request, name="logout"),
-    path('blogpost-like/<slug>', BlogLikeToggle.as_view(), name="blogpost_like"),
+    path('blogpost-like/<slug>', BlogLikeToggle.as_view(),
+         name="blogpost_like"),
+    path('api/blogpost-like/<slug>',
+         BlogLikeAPIToggle.as_view(), name="blogpost_api_like"),
+
 ]

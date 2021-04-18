@@ -10,8 +10,11 @@ class BlogForm(forms.ModelForm):
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'author': forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id': 'user', 'type': 'hidden'}),
-            'short_description': forms.TextInput(attrs={'class': 'form-control'}),
+            'author': forms.TextInput(attrs={'class': 'form-control',
+                                             'value': '', 'id': 'user',
+                                             'type': 'hidden'}),
+            'short_description': forms.TextInput(attrs={'class':
+                                                        'form-control'}),
             'blog_content': forms.Textarea(attrs={'class': 'form-control'}),
 
 

@@ -1,12 +1,15 @@
 from django.views.generic import ListView, DetailView, RedirectView
 from django.views.generic import CreateView, UpdateView, DeleteView
 from .models import Blog
-from django.urls import reverse_lazy, reverse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
-from django.contrib.auth import login, logout
+from django.urls import reverse_lazy
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth import logout
 from django.contrib import messages
 from .forms import BlogForm
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
 
 
 class HomeView(ListView):
@@ -17,13 +20,24 @@ class HomeView(ListView):
 class BlogView(DetailView):
     model = Blog
     template_name = 'details.html'
-    slug_field='slug'
+    slug_field = 'slug'
 
     def get_object(self):
         obj = super().get_object()
         obj.blog_views += 1
         obj.save()
         return obj
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        slug = self.kwargs.get("slug")
+        obj = get_object_or_404(Blog, slug=slug)
+        liked_user_list = []
+        for i in obj.blog_likes.all():
+            liked_user_list.append(i.id)
+
+        context['liked_user'] = liked_user_list
+        return context
 
 
 class BlogLikeToggle(RedirectView):
@@ -34,14 +48,40 @@ class BlogLikeToggle(RedirectView):
         slug = self.kwargs.get("slug")
         obj = get_object_or_404(Blog, slug=slug)
         url_ = obj.get_absolute_url()
-        number_of_likes = obj.number_of_likes()
         user = self.request.user
         if user.is_authenticated:
             if user in obj.blog_likes.all():
-                obj.blog_likes.remove(user)
+                pass
             else:
                 obj.blog_likes.add(user)
         return url_
+
+
+class BlogLikeAPIToggle(APIView):
+    authentication_classes = (authentication.SessionAuthentication, )
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, slug=None, format=None):
+
+        obj = get_object_or_404(Blog, slug=slug)
+
+        user = self.request.user
+        updated = False
+        liked = False
+
+        if user.is_authenticated:
+            if user in obj.blog_likes.all():
+                liked = False
+                pass
+            else:
+                obj.blog_likes.add(user)
+                liked = True
+            updated = True
+        data = {
+            'updated': updated,
+            'liked': liked
+        }
+        return Response(data)
 
 
 class AddBlogView(CreateView):
@@ -68,4 +108,3 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have successfully logged out.")
     return redirect("home")
-
