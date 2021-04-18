@@ -16,8 +16,8 @@ class Blog(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title_image = models.ImageField(
         upload_to='blog/',
-        # help_text='This image will be displayed as\
-        # the title image of the blog.'
+        help_text='This image will be displayed as\
+        the title image of the blog.'
     )
     short_description = models.TextField()
     blog_content = RichTextUploadingField()
@@ -27,8 +27,8 @@ class Blog(models.Model):
     blog_likes = models.ManyToManyField(User, related_name='likes')
     read_time = models.TimeField(null=True, blank=True)
 
-    # def __str__(self):
-    #     return self.title
+    def __str__(self):
+        return self.title
 
     def save(self, *args, **kwargs):
         if not self.slug:

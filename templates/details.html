@@ -7,9 +7,9 @@
         $(document).ready(function () {
             function updateText(btn, newCount) {
                 if (newCount == 1) {
-                    $('#btn').text(newCount + ' Clap')
+                    $('#btn').text(newCount + ' Like')
                 } else {
-                    $('#btn').text(newCount + ' Claps')
+                    $('#btn').text(newCount + ' Likes')
                 }
             }
 
@@ -67,7 +67,7 @@
 <a href="{% url 'update' blog.slug %}"><button class="btn btn-secondary">Edit</button></a>
 <a href="{% url 'delete' blog.slug %}"><button class="btn btn-danger">Delete</button></a>
 <br /><br />
-<strong class="text-secondary"> {{ blog.number_of_likes }} Clap{{ blog.number_of_likes|pluralize }}</strong>
+<strong class="text-secondary"> {{ blog.number_of_likes }} Like{{ blog.number_of_likes|pluralize }}</strong>
 
 
 {% else %}
@@ -75,11 +75,11 @@
 {% if user.id not in liked_user %}
 <a class='like-btn' data-href="{% url 'blogpost_api_like' blog.slug %}" data-likes='{{ blog.number_of_likes }}'
     href="{% url 'blogpost_like' blog.slug %}"><button class="btn btn-secondary" id='btn'>{{ blog.number_of_likes }}
-        Clap{{ blog.number_of_likes|pluralize }}</button></a>
+        Like{{ blog.number_of_likes|pluralize }}</button></a>
 {% endif %}
 {% if user.id in liked_user %}
 <button class="btn btn-secondary btn-lg" disabled id="btn">{{ blog.number_of_likes }}
-    Clap{{ blog.number_of_likes|pluralize }}</button></a>
+    Like{{ blog.number_of_likes|pluralize }}</button></a>
 {% endif %}
 
 
@@ -88,7 +88,7 @@
 {% else %}
 <a class="btn btn-outline-info" href="{% url 'home' %}">Log in to like this
     article!</a><br>
-<strong class="text-secondary"> {{ blog.number_of_likes }} Clap{{ blog.number_of_likes|pluralize }}</strong>
+<strong class="text-secondary"> {{ blog.number_of_likes }} Like{{ blog.number_of_likes|pluralize }}</strong>
 {% endif %}
 
 <br /><br />
